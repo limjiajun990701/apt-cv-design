@@ -15,7 +15,7 @@ const SummaryForm: React.FC = () => {
   return (
     <div className="space-y-4 animate-fade-in">
       <div>
-        <Label htmlFor="summary">Professional Summary</Label>
+        <Label htmlFor="summary">About / Professional Summary</Label>
         <Textarea
           id="summary"
           value={summary}

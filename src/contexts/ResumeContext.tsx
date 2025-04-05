@@ -1,12 +1,14 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export interface PersonalInfo {
   name: string;
+  middleName: string;
   title: string;
   email: string;
   phone: string;
   location: string;
+  linkedin: string;
+  github: string;
 }
 
 export interface Experience {
@@ -18,6 +20,8 @@ export interface Experience {
   endDate: string;
   current: boolean;
   description: string;
+  projects: string;
+  scope: string;
 }
 
 export interface Education {
@@ -36,21 +40,63 @@ export interface Skill {
   name: string;
 }
 
+export interface Language {
+  id: string;
+  name: string;
+  proficiency: string;
+}
+
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
+  expiry?: string;
+}
+
+export interface Activity {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface Badge {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
   summary: string;
   experience: Experience[];
   education: Education[];
   skills: Skill[];
+  languages: Language[];
+  achievements: Achievement[];
+  certifications: Certification[];
+  activities: Activity[];
+  badges: Badge[];
 }
 
 const defaultResumeData: ResumeData = {
   personalInfo: {
     name: "John Doe",
+    middleName: "",
     title: "Software Engineer",
     email: "john.doe@example.com",
     phone: "(123) 456-7890",
     location: "San Francisco, CA",
+    linkedin: "linkedin.com/in/johndoe",
+    github: "github.com/johndoe",
   },
   summary:
     "Experienced software engineer with a passion for developing innovative solutions. Proven track record in building scalable applications and leading development teams.",
@@ -65,6 +111,8 @@ const defaultResumeData: ResumeData = {
       current: true,
       description:
         "Led the development of cloud-based solutions, improved system performance by 40%, and mentored junior developers.",
+      projects: "Redesigned company's main product, increasing user engagement by 30%.",
+      scope: "Full-stack development, team leadership, architecture design",
     },
     {
       id: "exp2",
@@ -76,6 +124,8 @@ const defaultResumeData: ResumeData = {
       current: false,
       description:
         "Developed and maintained web applications using React and Node.js. Collaborated with cross-functional teams to deliver projects on time.",
+      projects: "Built customer portal that reduced support tickets by 25%.",
+      scope: "Frontend development, API integration, performance optimization",
     },
   ],
   education: [
@@ -108,6 +158,22 @@ const defaultResumeData: ResumeData = {
     { id: "skill5", name: "Python" },
     { id: "skill6", name: "Git" },
   ],
+  languages: [
+    { id: "lang1", name: "English", proficiency: "Native" },
+    { id: "lang2", name: "Spanish", proficiency: "Intermediate" },
+  ],
+  achievements: [
+    { id: "ach1", title: "Employee of the Year", description: "Recognized for outstanding contributions to company projects", date: "2022-12" },
+  ],
+  certifications: [
+    { id: "cert1", name: "AWS Certified Solutions Architect", issuer: "Amazon Web Services", date: "2021-05", expiry: "2024-05" },
+  ],
+  activities: [
+    { id: "act1", name: "Tech Meetup Organizer", description: "Organize monthly tech meetups for local developers" },
+  ],
+  badges: [
+    { id: "badge1", name: "Top Contributor", issuer: "GitHub", date: "2023-01" },
+  ],
 };
 
 interface ResumeContextType {
@@ -123,6 +189,21 @@ interface ResumeContextType {
   addSkill: (skill: Omit<Skill, "id">) => void;
   updateSkill: (id: string, skill: Partial<Skill>) => void;
   removeSkill: (id: string) => void;
+  addLanguage: (language: Omit<Language, "id">) => void;
+  updateLanguage: (id: string, language: Partial<Language>) => void;
+  removeLanguage: (id: string) => void;
+  addAchievement: (achievement: Omit<Achievement, "id">) => void;
+  updateAchievement: (id: string, achievement: Partial<Achievement>) => void;
+  removeAchievement: (id: string) => void;
+  addCertification: (certification: Omit<Certification, "id">) => void;
+  updateCertification: (id: string, certification: Partial<Certification>) => void;
+  removeCertification: (id: string) => void;
+  addActivity: (activity: Omit<Activity, "id">) => void;
+  updateActivity: (id: string, activity: Partial<Activity>) => void;
+  removeActivity: (id: string) => void;
+  addBadge: (badge: Omit<Badge, "id">) => void;
+  updateBadge: (id: string, badge: Partial<Badge>) => void;
+  removeBadge: (id: string) => void;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -223,6 +304,126 @@ export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
     }));
   };
 
+  const addLanguage = (language: Omit<Language, "id">) => {
+    const id = `lang${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      languages: [...prev.languages, { ...language, id }],
+    }));
+  };
+
+  const updateLanguage = (id: string, language: Partial<Language>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      languages: prev.languages.map((lang) =>
+        lang.id === id ? { ...lang, ...language } : lang
+      ),
+    }));
+  };
+
+  const removeLanguage = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      languages: prev.languages.filter((lang) => lang.id !== id),
+    }));
+  };
+
+  const addAchievement = (achievement: Omit<Achievement, "id">) => {
+    const id = `ach${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      achievements: [...prev.achievements, { ...achievement, id }],
+    }));
+  };
+
+  const updateAchievement = (id: string, achievement: Partial<Achievement>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      achievements: prev.achievements.map((ach) =>
+        ach.id === id ? { ...ach, ...achievement } : ach
+      ),
+    }));
+  };
+
+  const removeAchievement = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      achievements: prev.achievements.filter((ach) => ach.id !== id),
+    }));
+  };
+
+  const addCertification = (certification: Omit<Certification, "id">) => {
+    const id = `cert${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      certifications: [...prev.certifications, { ...certification, id }],
+    }));
+  };
+
+  const updateCertification = (id: string, certification: Partial<Certification>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      certifications: prev.certifications.map((cert) =>
+        cert.id === id ? { ...cert, ...certification } : cert
+      ),
+    }));
+  };
+
+  const removeCertification = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      certifications: prev.certifications.filter((cert) => cert.id !== id),
+    }));
+  };
+
+  const addActivity = (activity: Omit<Activity, "id">) => {
+    const id = `act${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      activities: [...prev.activities, { ...activity, id }],
+    }));
+  };
+
+  const updateActivity = (id: string, activity: Partial<Activity>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      activities: prev.activities.map((act) =>
+        act.id === id ? { ...act, ...activity } : act
+      ),
+    }));
+  };
+
+  const removeActivity = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      activities: prev.activities.filter((act) => act.id !== id),
+    }));
+  };
+
+  const addBadge = (badge: Omit<Badge, "id">) => {
+    const id = `badge${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      badges: [...prev.badges, { ...badge, id }],
+    }));
+  };
+
+  const updateBadge = (id: string, badge: Partial<Badge>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      badges: prev.badges.map((b) =>
+        b.id === id ? { ...b, ...badge } : b
+      ),
+    }));
+  };
+
+  const removeBadge = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      badges: prev.badges.filter((b) => b.id !== id),
+    }));
+  };
+
   return (
     <ResumeContext.Provider
       value={{
@@ -238,6 +439,21 @@ export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
         addSkill,
         updateSkill,
         removeSkill,
+        addLanguage,
+        updateLanguage,
+        removeLanguage,
+        addAchievement,
+        updateAchievement,
+        removeAchievement,
+        addCertification,
+        updateCertification,
+        removeCertification,
+        addActivity,
+        updateActivity,
+        removeActivity,
+        addBadge,
+        updateBadge,
+        removeBadge,
       }}
     >
       {children}

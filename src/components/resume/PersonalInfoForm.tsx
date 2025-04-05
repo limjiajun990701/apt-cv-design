@@ -26,6 +26,16 @@ const PersonalInfoForm: React.FC = () => {
         />
       </div>
       <div>
+        <Label htmlFor="middleName">Middle Name</Label>
+        <Input
+          id="middleName"
+          name="middleName"
+          value={personalInfo.middleName}
+          onChange={handleChange}
+          placeholder="Middle Name (optional)"
+        />
+      </div>
+      <div>
         <Label htmlFor="title">Professional Title</Label>
         <Input
           id="title"
@@ -64,6 +74,26 @@ const PersonalInfoForm: React.FC = () => {
           value={personalInfo.location}
           onChange={handleChange}
           placeholder="San Francisco, CA"
+        />
+      </div>
+      <div>
+        <Label htmlFor="linkedin">LinkedIn</Label>
+        <Input
+          id="linkedin"
+          name="linkedin"
+          value={personalInfo.linkedin}
+          onChange={handleChange}
+          placeholder="linkedin.com/in/johndoe"
+        />
+      </div>
+      <div>
+        <Label htmlFor="github">GitHub</Label>
+        <Input
+          id="github"
+          name="github"
+          value={personalInfo.github}
+          onChange={handleChange}
+          placeholder="github.com/johndoe"
         />
       </div>
     </div>

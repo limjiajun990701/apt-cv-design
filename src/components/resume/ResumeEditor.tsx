@@ -6,18 +6,30 @@ import SummaryForm from "./SummaryForm";
 import ExperienceForm from "./ExperienceForm";
 import EducationForm from "./EducationForm";
 import SkillsForm from "./SkillsForm";
+import LanguagesForm from "./LanguagesForm";
+import AchievementsForm from "./AchievementsForm";
+import CertificationsForm from "./CertificationsForm";
+import ActivitiesForm from "./ActivitiesForm";
+import BadgesForm from "./BadgesForm";
 
 const ResumeEditor: React.FC = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm h-full">
+    <div className="bg-white p-6 rounded-lg shadow-sm h-full overflow-auto">
       <h2 className="text-xl font-semibold mb-4">Edit Your Resume</h2>
       <Tabs defaultValue="personal" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-5 mb-2">
           <TabsTrigger value="personal">Personal</TabsTrigger>
           <TabsTrigger value="summary">Summary</TabsTrigger>
           <TabsTrigger value="experience">Experience</TabsTrigger>
           <TabsTrigger value="education">Education</TabsTrigger>
           <TabsTrigger value="skills">Skills</TabsTrigger>
+        </TabsList>
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="languages">Languages</TabsTrigger>
+          <TabsTrigger value="achievements">Achievements</TabsTrigger>
+          <TabsTrigger value="certifications">Certifications</TabsTrigger>
+          <TabsTrigger value="activities">Activities</TabsTrigger>
+          <TabsTrigger value="badges">Badges</TabsTrigger>
         </TabsList>
         <TabsContent value="personal" className="mt-4">
           <PersonalInfoForm />
@@ -33,6 +45,21 @@ const ResumeEditor: React.FC = () => {
         </TabsContent>
         <TabsContent value="skills" className="mt-4">
           <SkillsForm />
+        </TabsContent>
+        <TabsContent value="languages" className="mt-4">
+          <LanguagesForm />
+        </TabsContent>
+        <TabsContent value="achievements" className="mt-4">
+          <AchievementsForm />
+        </TabsContent>
+        <TabsContent value="certifications" className="mt-4">
+          <CertificationsForm />
+        </TabsContent>
+        <TabsContent value="activities" className="mt-4">
+          <ActivitiesForm />
+        </TabsContent>
+        <TabsContent value="badges" className="mt-4">
+          <BadgesForm />
         </TabsContent>
       </Tabs>
     </div>
