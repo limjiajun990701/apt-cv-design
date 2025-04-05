@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useResumeContext } from "@/contexts/ResumeContext";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatUrl } from "@/lib/utils";
 
 const ResumePreview: React.FC = () => {
   const { resumeData } = useResumeContext();
@@ -17,13 +17,6 @@ const ResumePreview: React.FC = () => {
     activities, 
     badges 
   } = resumeData;
-
-  // Helper function to format URLs
-  const formatUrl = (url: string) => {
-    if (!url) return "";
-    if (url.startsWith("http")) return url;
-    return `https://${url}`;
-  };
 
   return (
     <div className="bg-white p-8 rounded-lg resume-paper overflow-auto h-full max-w-[210mm]">
@@ -200,6 +193,9 @@ const ResumePreview: React.FC = () => {
                 {achievements.map((achievement) => (
                   <li key={achievement.id} className="text-gray-700 text-sm">
                     <span className="font-medium">{achievement.title}</span> ({formatDate(achievement.date)}) - {achievement.description}
+                    {achievement.url && (
+                      <span> - <a href={formatUrl(achievement.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View</a></span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -215,6 +211,9 @@ const ResumePreview: React.FC = () => {
                   <li key={certification.id} className="text-gray-700 text-sm">
                     <span className="font-medium">{certification.name}</span> - {certification.issuer} ({formatDate(certification.date)}
                     {certification.expiry && ` to ${formatDate(certification.expiry)}`})
+                    {certification.url && (
+                      <span> - <a href={formatUrl(certification.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Verify</a></span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -229,6 +228,9 @@ const ResumePreview: React.FC = () => {
                 {activities.map((activity) => (
                   <li key={activity.id} className="text-gray-700 text-sm">
                     <span className="font-medium">{activity.name}</span> - {activity.description}
+                    {activity.url && (
+                      <span> - <a href={formatUrl(activity.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Learn more</a></span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -243,6 +245,9 @@ const ResumePreview: React.FC = () => {
                 {badges.map((badge) => (
                   <li key={badge.id} className="text-gray-700 text-sm">
                     <span className="font-medium">{badge.name}</span> - {badge.issuer} ({formatDate(badge.date)})
+                    {badge.url && (
+                      <span> - <a href={formatUrl(badge.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View badge</a></span>
+                    )}
                   </li>
                 ))}
               </ul>
