@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, X, Edit, Save, XCircle, Calendar } from "lucide-react";
+import { PlusCircle, X, Edit, Save, XCircle, Calendar, Link, Briefcase } from "lucide-react";
 
 const AchievementsForm: React.FC = () => {
   const { resumeData, addAchievement, updateAchievement, removeAchievement } = useResumeContext();
@@ -14,6 +14,8 @@ const AchievementsForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const [url, setUrl] = useState("");
+  const [project, setProject] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,15 +23,17 @@ const AchievementsForm: React.FC = () => {
     if (!title.trim() || !description.trim()) return;
 
     if (editId) {
-      updateAchievement(editId, { title, description, date });
+      updateAchievement(editId, { title, description, date, url, project });
       setEditId(null);
     } else {
-      addAchievement({ title, description, date });
+      addAchievement({ title, description, date, url, project });
     }
 
     setTitle("");
     setDescription("");
     setDate("");
+    setUrl("");
+    setProject("");
   };
 
   const handleEdit = (id: string) => {
@@ -38,6 +42,8 @@ const AchievementsForm: React.FC = () => {
       setTitle(achievement.title);
       setDescription(achievement.description);
       setDate(achievement.date);
+      setUrl(achievement.url || "");
+      setProject(achievement.project || "");
       setEditId(id);
     }
   };
@@ -46,6 +52,8 @@ const AchievementsForm: React.FC = () => {
     setTitle("");
     setDescription("");
     setDate("");
+    setUrl("");
+    setProject("");
     setEditId(null);
   };
 
@@ -79,6 +87,26 @@ const AchievementsForm: React.FC = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your achievement and why it was significant..."
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="achievementUrl">Credential URL (Optional)</Label>
+          <Input
+            id="achievementUrl"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="e.g., https://example.com/credential"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="achievementProject">Related Project/Portfolio (Optional)</Label>
+          <Textarea
+            id="achievementProject"
+            value={project}
+            onChange={(e) => setProject(e.target.value)}
+            placeholder="Describe any project or portfolio work related to this achievement"
           />
         </div>
 
@@ -117,6 +145,23 @@ const AchievementsForm: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-gray-600 text-sm mt-1">{achievement.description}</p>
+                
+                {achievement.url && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-center">
+                    <Link className="h-3 w-3 mr-1" /> 
+                    <a href={achievement.url} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">
+                      Credential URL
+                    </a>
+                  </div>
+                )}
+                
+                {achievement.project && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-start">
+                    <Briefcase className="h-3 w-3 mr-1 mt-1" /> 
+                    <span>Project: {achievement.project}</span>
+                  </div>
+                )}
+                
                 <div className="flex justify-end gap-2 mt-2">
                   <Button variant="ghost" size="sm" onClick={() => handleEdit(achievement.id)}>
                     <Edit className="h-4 w-4" />

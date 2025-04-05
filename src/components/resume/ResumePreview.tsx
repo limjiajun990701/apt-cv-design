@@ -196,6 +196,11 @@ const ResumePreview: React.FC = () => {
                     {achievement.url && (
                       <span> - <a href={formatUrl(achievement.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View</a></span>
                     )}
+                    {achievement.project && (
+                      <div className="ml-5 text-gray-600">
+                        <span className="font-medium">Project:</span> {achievement.project}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -214,6 +219,11 @@ const ResumePreview: React.FC = () => {
                     {certification.url && (
                       <span> - <a href={formatUrl(certification.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Verify</a></span>
                     )}
+                    {certification.project && (
+                      <div className="ml-5 text-gray-600">
+                        <span className="font-medium">Project:</span> {certification.project}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -231,6 +241,11 @@ const ResumePreview: React.FC = () => {
                     {activity.url && (
                       <span> - <a href={formatUrl(activity.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Learn more</a></span>
                     )}
+                    {activity.project && (
+                      <div className="ml-5 text-gray-600">
+                        <span className="font-medium">Project:</span> {activity.project}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -247,6 +262,11 @@ const ResumePreview: React.FC = () => {
                     <span className="font-medium">{badge.name}</span> - {badge.issuer} ({formatDate(badge.date)})
                     {badge.url && (
                       <span> - <a href={formatUrl(badge.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View badge</a></span>
+                    )}
+                    {badge.project && (
+                      <div className="ml-5 text-gray-600">
+                        <span className="font-medium">Project:</span> {badge.project}
+                      </div>
                     )}
                   </li>
                 ))}

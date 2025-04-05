@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export interface PersonalInfo {
@@ -51,6 +52,8 @@ export interface Achievement {
   title: string;
   description: string;
   date: string;
+  url?: string;
+  project?: string;
 }
 
 export interface Certification {
@@ -59,12 +62,16 @@ export interface Certification {
   issuer: string;
   date: string;
   expiry?: string;
+  url?: string;
+  project?: string;
 }
 
 export interface Activity {
   id: string;
   name: string;
   description: string;
+  url?: string;
+  project?: string;
 }
 
 export interface Badge {
@@ -72,6 +79,8 @@ export interface Badge {
   name: string;
   issuer: string;
   date: string;
+  url?: string;
+  project?: string;
 }
 
 export interface ResumeData {

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, X, Edit, Save, XCircle } from "lucide-react";
+import { PlusCircle, X, Edit, Save, XCircle, Link, Briefcase } from "lucide-react";
 
 const ActivitiesForm: React.FC = () => {
   const { resumeData, addActivity, updateActivity, removeActivity } = useResumeContext();
@@ -13,6 +13,8 @@ const ActivitiesForm: React.FC = () => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
+  const [project, setProject] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,14 +22,16 @@ const ActivitiesForm: React.FC = () => {
     if (!name.trim()) return;
 
     if (editId) {
-      updateActivity(editId, { name, description });
+      updateActivity(editId, { name, description, url, project });
       setEditId(null);
     } else {
-      addActivity({ name, description });
+      addActivity({ name, description, url, project });
     }
 
     setName("");
     setDescription("");
+    setUrl("");
+    setProject("");
   };
 
   const handleEdit = (id: string) => {
@@ -35,6 +39,8 @@ const ActivitiesForm: React.FC = () => {
     if (activity) {
       setName(activity.name);
       setDescription(activity.description || "");
+      setUrl(activity.url || "");
+      setProject(activity.project || "");
       setEditId(id);
     }
   };
@@ -42,6 +48,8 @@ const ActivitiesForm: React.FC = () => {
   const handleCancel = () => {
     setName("");
     setDescription("");
+    setUrl("");
+    setProject("");
     setEditId(null);
   };
 
@@ -65,6 +73,26 @@ const ActivitiesForm: React.FC = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your role and contributions in this activity..."
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="activityUrl">Activity URL (Optional)</Label>
+          <Input
+            id="activityUrl"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="e.g., https://organization.com/event"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="activityProject">Related Project/Portfolio (Optional)</Label>
+          <Textarea
+            id="activityProject"
+            value={project}
+            onChange={(e) => setProject(e.target.value)}
+            placeholder="Describe any project or portfolio work related to this activity"
           />
         </div>
 
@@ -99,6 +127,23 @@ const ActivitiesForm: React.FC = () => {
                 {activity.description && (
                   <p className="text-gray-600 text-sm mt-1">{activity.description}</p>
                 )}
+                
+                {activity.url && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-center">
+                    <Link className="h-3 w-3 mr-1" /> 
+                    <a href={activity.url} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">
+                      Activity Link
+                    </a>
+                  </div>
+                )}
+                
+                {activity.project && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-start">
+                    <Briefcase className="h-3 w-3 mr-1 mt-1" /> 
+                    <span>Project: {activity.project}</span>
+                  </div>
+                )}
+                
                 <div className="flex justify-end gap-2 mt-2">
                   <Button variant="ghost" size="sm" onClick={() => handleEdit(activity.id)}>
                     <Edit className="h-4 w-4" />

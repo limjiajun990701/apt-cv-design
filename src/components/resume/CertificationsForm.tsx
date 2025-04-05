@@ -4,8 +4,9 @@ import { useResumeContext } from "@/contexts/ResumeContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, X, Edit, Save, XCircle, Calendar } from "lucide-react";
+import { PlusCircle, X, Edit, Save, XCircle, Calendar, Link, Briefcase } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 const CertificationsForm: React.FC = () => {
   const { resumeData, addCertification, updateCertification, removeCertification } = useResumeContext();
@@ -16,6 +17,8 @@ const CertificationsForm: React.FC = () => {
   const [date, setDate] = useState("");
   const [expiry, setExpiry] = useState("");
   const [noExpiry, setNoExpiry] = useState(false);
+  const [url, setUrl] = useState("");
+  const [project, setProject] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,6 +30,8 @@ const CertificationsForm: React.FC = () => {
       issuer,
       date,
       expiry: noExpiry ? undefined : expiry,
+      url,
+      project
     };
 
     if (editId) {
@@ -40,6 +45,8 @@ const CertificationsForm: React.FC = () => {
     setIssuer("");
     setDate("");
     setExpiry("");
+    setUrl("");
+    setProject("");
     setNoExpiry(false);
   };
 
@@ -51,6 +58,8 @@ const CertificationsForm: React.FC = () => {
       setDate(certification.date);
       setExpiry(certification.expiry || "");
       setNoExpiry(!certification.expiry);
+      setUrl(certification.url || "");
+      setProject(certification.project || "");
       setEditId(id);
     }
   };
@@ -60,6 +69,8 @@ const CertificationsForm: React.FC = () => {
     setIssuer("");
     setDate("");
     setExpiry("");
+    setUrl("");
+    setProject("");
     setNoExpiry(false);
     setEditId(null);
   };
@@ -127,6 +138,26 @@ const CertificationsForm: React.FC = () => {
             </div>
           )}
         </div>
+        
+        <div>
+          <Label htmlFor="certificationUrl">Credential URL (Optional)</Label>
+          <Input
+            id="certificationUrl"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="e.g., https://www.credly.com/badges/your-badge"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="certificationProject">Related Project/Portfolio (Optional)</Label>
+          <Textarea
+            id="certificationProject"
+            value={project}
+            onChange={(e) => setProject(e.target.value)}
+            placeholder="Describe any project or portfolio work related to this certification"
+          />
+        </div>
 
         <div className="flex gap-2">
           <Button type="submit" disabled={!name.trim() || !issuer.trim() || !date.trim()}>
@@ -165,6 +196,23 @@ const CertificationsForm: React.FC = () => {
                   {certification.expiry && ` to ${certification.expiry}`}
                   {!certification.expiry && " (No Expiration)"}
                 </div>
+                
+                {certification.url && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-center">
+                    <Link className="h-3 w-3 mr-1" /> 
+                    <a href={certification.url} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">
+                      Verify Credential
+                    </a>
+                  </div>
+                )}
+                
+                {certification.project && (
+                  <div className="text-gray-600 text-sm mt-1 flex items-start">
+                    <Briefcase className="h-3 w-3 mr-1 mt-1" /> 
+                    <span>Project: {certification.project}</span>
+                  </div>
+                )}
+                
                 <div className="flex justify-end gap-2 mt-2">
                   <Button variant="ghost" size="sm" onClick={() => handleEdit(certification.id)}>
                     <Edit className="h-4 w-4" />
