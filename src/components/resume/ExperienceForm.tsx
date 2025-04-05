@@ -21,6 +21,8 @@ const ExperienceForm: React.FC = () => {
     endDate: "",
     current: false,
     description: "",
+    projects: "",
+    scope: "",
   });
 
   const handleAddExperience = () => {
@@ -33,6 +35,8 @@ const ExperienceForm: React.FC = () => {
       endDate: "",
       current: false,
       description: "",
+      projects: "",
+      scope: "",
     });
   };
 
@@ -142,6 +146,27 @@ const ExperienceForm: React.FC = () => {
             className="h-24"
           />
         </div>
+        <div>
+          <Label htmlFor="scope">Scope</Label>
+          <Input
+            id="scope"
+            name="scope"
+            value={newExperience.scope}
+            onChange={handleNewExperienceChange}
+            placeholder="Full-stack development, team leadership, etc."
+          />
+        </div>
+        <div>
+          <Label htmlFor="projects">Projects</Label>
+          <Textarea
+            id="projects"
+            name="projects"
+            value={newExperience.projects}
+            onChange={handleNewExperienceChange}
+            placeholder="Notable projects you worked on..."
+            className="h-24"
+          />
+        </div>
         <div className="flex justify-end">
           <Button onClick={handleAddExperience} disabled={!newExperience.title || !newExperience.company}>
             <PlusCircle className="mr-2 h-4 w-4" />
@@ -246,6 +271,27 @@ const ExperienceForm: React.FC = () => {
                       name="description"
                       value={exp.description}
                       onChange={(e) => handleExperienceChange(exp.id, e)}
+                      className="h-24"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <Label htmlFor={`${exp.id}-scope`}>Scope</Label>
+                    <Input
+                      id={`${exp.id}-scope`}
+                      name="scope"
+                      value={exp.scope}
+                      onChange={(e) => handleExperienceChange(exp.id, e)}
+                      placeholder="Full-stack development, team leadership, etc."
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <Label htmlFor={`${exp.id}-projects`}>Projects</Label>
+                    <Textarea
+                      id={`${exp.id}-projects`}
+                      name="projects"
+                      value={exp.projects}
+                      onChange={(e) => handleExperienceChange(exp.id, e)}
+                      placeholder="Notable projects you worked on..."
                       className="h-24"
                     />
                   </div>
