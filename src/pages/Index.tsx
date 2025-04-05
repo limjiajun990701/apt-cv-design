@@ -15,7 +15,12 @@ const Index = () => {
             <ResumeEditor />
           </div>
           <div className="w-full md:w-1/2 flex flex-col">
-            <ResumePreview />
+            <div className="bg-white p-6 rounded-lg shadow-sm h-full overflow-auto">
+              <h2 className="text-xl font-semibold mb-4">Preview</h2>
+              <div className="flex justify-center">
+                <ResumePreview />
+              </div>
+            </div>
           </div>
         </div>
       </div>

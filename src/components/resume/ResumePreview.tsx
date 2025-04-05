@@ -18,30 +18,72 @@ const ResumePreview: React.FC = () => {
     badges 
   } = resumeData;
 
+  // Helper function to format URLs
+  const formatUrl = (url: string) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `https://${url}`;
+  };
+
   return (
-    <div className="bg-white p-8 rounded-lg resume-paper overflow-auto h-full">
+    <div className="bg-white p-8 rounded-lg resume-paper overflow-auto h-full max-w-[210mm]">
       {/* Header - NAME and MIDDLE */}
-      <div className="mb-6 text-center">
+      <div className="mb-4 text-center">
         <h1 className="text-3xl font-bold text-resume-blue">
           {personalInfo.name} {personalInfo.middleName && personalInfo.middleName}
         </h1>
+        {personalInfo.title && (
+          <p className="text-xl text-gray-700 mt-1">{personalInfo.title}</p>
+        )}
       </div>
 
       {/* Contact Info Row */}
       <div className="flex flex-wrap justify-center gap-3 mb-6 text-sm text-gray-600">
-        <div>{personalInfo.phone}</div>
-        <div>•</div>
-        <div>{personalInfo.email}</div>
+        {personalInfo.phone && <div>{personalInfo.phone}</div>}
+        {personalInfo.email && (
+          <>
+            <div>•</div>
+            <div>
+              <a href={`mailto:${personalInfo.email}`} className="text-resume-blue hover:underline">
+                {personalInfo.email}
+              </a>
+            </div>
+          </>
+        )}
+        {personalInfo.location && (
+          <>
+            <div>•</div>
+            <div>{personalInfo.location}</div>
+          </>
+        )}
         {personalInfo.linkedin && (
           <>
             <div>•</div>
-            <div>{personalInfo.linkedin}</div>
+            <div>
+              <a 
+                href={formatUrl(personalInfo.linkedin)} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-resume-blue hover:underline"
+              >
+                LinkedIn
+              </a>
+            </div>
           </>
         )}
         {personalInfo.github && (
           <>
             <div>•</div>
-            <div>{personalInfo.github}</div>
+            <div>
+              <a 
+                href={formatUrl(personalInfo.github)} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-resume-blue hover:underline"
+              >
+                GitHub
+              </a>
+            </div>
           </>
         )}
       </div>
@@ -50,7 +92,7 @@ const ResumePreview: React.FC = () => {
       {summary && (
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-2 text-resume-blue border-b pb-1">ABOUT</h2>
-          <p className="text-gray-700">{summary}</p>
+          <p className="text-gray-700 whitespace-pre-line">{summary}</p>
         </div>
       )}
 

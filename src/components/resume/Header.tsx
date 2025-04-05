@@ -1,26 +1,54 @@
 
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import html2pdf from "html2pdf.js";
 
 const Header: React.FC = () => {
   const { toast } = useToast();
   
   const handleDownload = () => {
-    // This is a placeholder - in a real implementation, we'd use a library like html2pdf or react-pdf
     toast({
       title: "Download Started",
       description: "Your resume is being prepared for download as PDF.",
     });
     
-    // Simulate download process
-    setTimeout(() => {
+    // Get the resume element
+    const element = document.querySelector('.resume-paper');
+    
+    if (!element) {
+      toast({
+        title: "Error",
+        description: "Could not find resume content to download.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Configure the PDF options
+    const opt = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      filename: 'my-resume.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    
+    // Generate PDF
+    html2pdf().set(opt).from(element).save().then(() => {
       toast({
         title: "Download Complete",
         description: "Your resume has been downloaded successfully.",
       });
-    }, 1500);
+    }).catch((error) => {
+      console.error('PDF generation failed:', error);
+      toast({
+        title: "Download Failed",
+        description: "There was an error generating your PDF. Please try again.",
+        variant: "destructive",
+      });
+    });
   };
 
   return (
