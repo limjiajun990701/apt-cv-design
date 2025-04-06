@@ -196,6 +196,8 @@ const defaultResumeData: ResumeData = {
 
 interface ResumeContextType {
   resumeData: ResumeData;
+  template: string;
+  setTemplate: (template: string) => void;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   updateSummary: (summary: string) => void;
   addExperience: (experience: Omit<Experience, "id">) => void;
@@ -243,6 +245,7 @@ interface ResumeProviderProps {
 
 export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
   const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData);
+  const [template, setTemplate] = useState<string>("Classic");
 
   const updatePersonalInfo = (info: Partial<PersonalInfo>) => {
     setResumeData((prev) => ({
@@ -473,6 +476,8 @@ export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
     <ResumeContext.Provider
       value={{
         resumeData,
+        template,
+        setTemplate,
         updatePersonalInfo,
         updateSummary,
         addExperience,
