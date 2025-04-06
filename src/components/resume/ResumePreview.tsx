@@ -6,9 +6,10 @@ import ModernTemplate from "./templates/ModernTemplate";
 import MinimalTemplate from "./templates/MinimalTemplate";
 import ProfessionalTemplate from "./templates/ProfessionalTemplate";
 import { Button } from "@/components/ui/button";
-import { FileDown } from "lucide-react";
+import { FileDown, FileText } from "lucide-react";
 import html2pdf from "html2pdf.js";
 import { useToast } from "@/components/ui/use-toast";
+import { resumeToMarkdown } from "@/utils/markdownUtils";
 
 const ResumePreview: React.FC = () => {
   const { resumeData, template } = useResumeContext();
@@ -47,9 +48,30 @@ const ResumePreview: React.FC = () => {
     }
   };
 
+  const exportMarkdown = () => {
+    const markdown = resumeToMarkdown(resumeData);
+    const blob = new Blob([markdown], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${resumeData.personalInfo.name.toLowerCase().replace(/\s+/g, '_')}_resume.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: "Resume Exported",
+      description: "Your resume has been exported as a Markdown file.",
+    });
+  };
+
   return (
     <div className="flex flex-col h-full">
-      <div className="flex justify-end mb-3">
+      <div className="flex justify-end mb-3 space-x-2">
+        <Button variant="outline" size="sm" onClick={exportMarkdown}>
+          <FileText className="h-4 w-4 mr-1" /> Export MD
+        </Button>
         <Button variant="outline" size="sm" onClick={exportPDF}>
           <FileDown className="h-4 w-4 mr-1" /> Export PDF
         </Button>
