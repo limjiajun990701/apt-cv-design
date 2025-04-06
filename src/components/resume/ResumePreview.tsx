@@ -18,6 +18,36 @@ const ResumePreview: React.FC = () => {
     badges 
   } = resumeData;
 
+  // Collect all projects from different sections
+  const projects = [
+    ...achievements.filter(a => a.project).map(a => ({ 
+      source: 'Achievement',
+      title: a.title,
+      project: a.project,
+      url: a.url
+    })),
+    ...certifications.filter(c => c.project).map(c => ({ 
+      source: 'Certification',
+      title: c.name,
+      project: c.project,
+      url: c.url
+    })),
+    ...activities.filter(a => a.project).map(a => ({ 
+      source: 'Activity',
+      title: a.name,
+      project: a.project,
+      url: a.url
+    })),
+    ...badges.filter(b => b.project).map(b => ({ 
+      source: 'Badge',
+      title: b.name,
+      project: b.project,
+      url: b.url
+    }))
+  ];
+
+  const hasProjects = projects.length > 0;
+
   return (
     <div className="bg-white p-8 rounded-lg resume-paper overflow-auto h-full max-w-[210mm]">
       {/* Header - NAME and MIDDLE */}
@@ -180,7 +210,7 @@ const ResumePreview: React.FC = () => {
 
       {/* ACHIEVEMENTS, CERTIFICATIONS, ACTIVITIES, BADGES */}
       {(achievements.length > 0 || certifications.length > 0 || activities.length > 0 || badges.length > 0) && (
-        <div>
+        <div className="mb-6">
           <h2 className="text-lg font-semibold mb-3 text-resume-blue border-b pb-1">
             ACHIEVEMENTS / CERTIFICATIONS / ACTIVITIES / BADGES
           </h2>
@@ -195,11 +225,6 @@ const ResumePreview: React.FC = () => {
                     <span className="font-medium">{achievement.title}</span> ({formatDate(achievement.date)}) - {achievement.description}
                     {achievement.url && (
                       <span> - <a href={formatUrl(achievement.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View</a></span>
-                    )}
-                    {achievement.project && (
-                      <div className="ml-5 text-gray-600">
-                        <span className="font-medium">Project:</span> {achievement.project}
-                      </div>
                     )}
                   </li>
                 ))}
@@ -219,11 +244,6 @@ const ResumePreview: React.FC = () => {
                     {certification.url && (
                       <span> - <a href={formatUrl(certification.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Verify</a></span>
                     )}
-                    {certification.project && (
-                      <div className="ml-5 text-gray-600">
-                        <span className="font-medium">Project:</span> {certification.project}
-                      </div>
-                    )}
                   </li>
                 ))}
               </ul>
@@ -241,11 +261,6 @@ const ResumePreview: React.FC = () => {
                     {activity.url && (
                       <span> - <a href={formatUrl(activity.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">Learn more</a></span>
                     )}
-                    {activity.project && (
-                      <div className="ml-5 text-gray-600">
-                        <span className="font-medium">Project:</span> {activity.project}
-                      </div>
-                    )}
                   </li>
                 ))}
               </ul>
@@ -254,7 +269,7 @@ const ResumePreview: React.FC = () => {
           
           {/* Badges */}
           {badges.length > 0 && (
-            <div>
+            <div className="mb-3">
               <h3 className="font-medium text-resume-blue text-sm mb-1">Badges</h3>
               <ul className="list-disc pl-5 space-y-1">
                 {badges.map((badge) => (
@@ -263,16 +278,35 @@ const ResumePreview: React.FC = () => {
                     {badge.url && (
                       <span> - <a href={formatUrl(badge.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">View badge</a></span>
                     )}
-                    {badge.project && (
-                      <div className="ml-5 text-gray-600">
-                        <span className="font-medium">Project:</span> {badge.project}
-                      </div>
-                    )}
                   </li>
                 ))}
               </ul>
             </div>
           )}
+        </div>
+      )}
+
+      {/* PROJECTS SECTION */}
+      {hasProjects && (
+        <div>
+          <h2 className="text-lg font-semibold mb-3 text-resume-blue border-b pb-1">RELATED PROJECTS</h2>
+          <ul className="list-disc pl-5 space-y-2">
+            {projects.map((projectItem, index) => (
+              <li key={index} className="text-gray-700">
+                <div>
+                  <span className="font-medium">{projectItem.source}: {projectItem.title}</span>
+                </div>
+                <div className="text-sm ml-2">{projectItem.project}</div>
+                {projectItem.url && (
+                  <div className="text-sm ml-2">
+                    <a href={formatUrl(projectItem.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">
+                      View Related Resource
+                    </a>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
