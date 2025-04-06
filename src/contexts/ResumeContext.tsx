@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export interface PersonalInfo {
@@ -53,7 +52,6 @@ export interface Achievement {
   description: string;
   date: string;
   url?: string;
-  project?: string;
 }
 
 export interface Certification {
@@ -83,6 +81,13 @@ export interface Badge {
   project?: string;
 }
 
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  url?: string;
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
   summary: string;
@@ -94,6 +99,7 @@ export interface ResumeData {
   certifications: Certification[];
   activities: Activity[];
   badges: Badge[];
+  projects: Project[];
 }
 
 const defaultResumeData: ResumeData = {
@@ -183,6 +189,9 @@ const defaultResumeData: ResumeData = {
   badges: [
     { id: "badge1", name: "Top Contributor", issuer: "GitHub", date: "2023-01" },
   ],
+  projects: [
+    { id: "proj1", title: "Personal Portfolio Website", description: "A responsive website showcasing my work, built with React and Tailwind CSS." },
+  ]
 };
 
 interface ResumeContextType {
@@ -213,6 +222,9 @@ interface ResumeContextType {
   addBadge: (badge: Omit<Badge, "id">) => void;
   updateBadge: (id: string, badge: Partial<Badge>) => void;
   removeBadge: (id: string) => void;
+  addProject: (project: Omit<Project, "id">) => void;
+  updateProject: (id: string, project: Partial<Project>) => void;
+  removeProject: (id: string) => void;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -433,6 +445,30 @@ export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
     }));
   };
 
+  const addProject = (project: Omit<Project, "id">) => {
+    const id = `proj${Date.now()}`;
+    setResumeData((prev) => ({
+      ...prev,
+      projects: [...prev.projects, { ...project, id }],
+    }));
+  };
+
+  const updateProject = (id: string, project: Partial<Project>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      projects: prev.projects.map((proj) =>
+        proj.id === id ? { ...proj, ...project } : proj
+      ),
+    }));
+  };
+
+  const removeProject = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      projects: prev.projects.filter((proj) => proj.id !== id),
+    }));
+  };
+
   return (
     <ResumeContext.Provider
       value={{
@@ -463,6 +499,9 @@ export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
         addBadge,
         updateBadge,
         removeBadge,
+        addProject,
+        updateProject,
+        removeProject,
       }}
     >
       {children}

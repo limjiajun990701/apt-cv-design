@@ -15,38 +15,9 @@ const ResumePreview: React.FC = () => {
     achievements, 
     certifications, 
     activities, 
-    badges 
+    badges,
+    projects
   } = resumeData;
-
-  // Collect all projects from different sections
-  const projects = [
-    ...achievements.filter(a => a.project).map(a => ({ 
-      source: 'Achievement',
-      title: a.title,
-      project: a.project,
-      url: a.url
-    })),
-    ...certifications.filter(c => c.project).map(c => ({ 
-      source: 'Certification',
-      title: c.name,
-      project: c.project,
-      url: c.url
-    })),
-    ...activities.filter(a => a.project).map(a => ({ 
-      source: 'Activity',
-      title: a.name,
-      project: a.project,
-      url: a.url
-    })),
-    ...badges.filter(b => b.project).map(b => ({ 
-      source: 'Badge',
-      title: b.name,
-      project: b.project,
-      url: b.url
-    }))
-  ];
-
-  const hasProjects = projects.length > 0;
 
   return (
     <div className="bg-white p-8 rounded-lg resume-paper overflow-auto h-full max-w-[210mm]">
@@ -177,6 +148,33 @@ const ResumePreview: React.FC = () => {
         </div>
       )}
 
+      {/* PROJECTS */}
+      {projects.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold mb-3 text-resume-blue border-b pb-1">PROJECTS</h2>
+          <div className="space-y-3">
+            {projects.map((project) => (
+              <div key={project.id}>
+                <h3 className="font-medium">{project.title}</h3>
+                <p className="text-gray-700 text-sm">{project.description}</p>
+                {project.url && (
+                  <div className="text-sm">
+                    <a 
+                      href={formatUrl(project.url)} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-resume-blue hover:underline"
+                    >
+                      View Project
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* TECHNICAL SKILLS */}
       {skills.length > 0 && (
         <div className="mb-6">
@@ -283,30 +281,6 @@ const ResumePreview: React.FC = () => {
               </ul>
             </div>
           )}
-        </div>
-      )}
-
-      {/* PROJECTS SECTION */}
-      {hasProjects && (
-        <div>
-          <h2 className="text-lg font-semibold mb-3 text-resume-blue border-b pb-1">RELATED PROJECTS</h2>
-          <ul className="list-disc pl-5 space-y-2">
-            {projects.map((projectItem, index) => (
-              <li key={index} className="text-gray-700">
-                <div>
-                  <span className="font-medium">{projectItem.source}: {projectItem.title}</span>
-                </div>
-                <div className="text-sm ml-2">{projectItem.project}</div>
-                {projectItem.url && (
-                  <div className="text-sm ml-2">
-                    <a href={formatUrl(projectItem.url)} target="_blank" rel="noopener noreferrer" className="text-resume-blue hover:underline">
-                      View Related Resource
-                    </a>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
         </div>
       )}
     </div>

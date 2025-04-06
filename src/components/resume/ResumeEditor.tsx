@@ -11,18 +11,20 @@ import AchievementsForm from "./AchievementsForm";
 import CertificationsForm from "./CertificationsForm";
 import ActivitiesForm from "./ActivitiesForm";
 import BadgesForm from "./BadgesForm";
+import ProjectsForm from "./ProjectsForm";
 
 const ResumeEditor: React.FC = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm h-full overflow-auto">
       <h2 className="text-xl font-semibold mb-4">Edit Your Resume</h2>
       <Tabs defaultValue="personal" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 mb-2">
+        <TabsList className="grid w-full grid-cols-6 mb-2">
           <TabsTrigger value="personal">Personal</TabsTrigger>
           <TabsTrigger value="summary">Summary</TabsTrigger>
           <TabsTrigger value="experience">Experience</TabsTrigger>
           <TabsTrigger value="education">Education</TabsTrigger>
           <TabsTrigger value="skills">Skills</TabsTrigger>
+          <TabsTrigger value="projects">Projects</TabsTrigger>
         </TabsList>
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="languages">Languages</TabsTrigger>
@@ -45,6 +47,9 @@ const ResumeEditor: React.FC = () => {
         </TabsContent>
         <TabsContent value="skills" className="mt-4">
           <SkillsForm />
+        </TabsContent>
+        <TabsContent value="projects" className="mt-4">
+          <ProjectsForm />
         </TabsContent>
         <TabsContent value="languages" className="mt-4">
           <LanguagesForm />
