@@ -1,6 +1,14 @@
 
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
+import { useResumeContext } from "@/contexts/ResumeContext";
 import PersonalInfoForm from "./PersonalInfoForm";
 import SummaryForm from "./SummaryForm";
 import ExperienceForm from "./ExperienceForm";
@@ -14,9 +22,25 @@ import BadgesForm from "./BadgesForm";
 import ProjectsForm from "./ProjectsForm";
 
 const ResumeEditor: React.FC = () => {
+  const { setTemplate, template } = useResumeContext();
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm h-full overflow-auto">
-      <h2 className="text-xl font-semibold mb-4">Edit Your Resume</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Edit Your Resume</h2>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-1 text-sm border rounded-md hover:bg-gray-50">
+            Template: {template} <ChevronDown className="h-4 w-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => setTemplate("Classic")}>Classic</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTemplate("Modern")}>Modern</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTemplate("Minimal")}>Minimal</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTemplate("Professional")}>Professional</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       <Tabs defaultValue="personal" className="w-full">
         <TabsList className="grid w-full grid-cols-6 mb-2">
           <TabsTrigger value="personal">Personal</TabsTrigger>
