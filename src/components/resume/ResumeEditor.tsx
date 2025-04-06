@@ -20,6 +20,7 @@ import CertificationsForm from "./CertificationsForm";
 import ActivitiesForm from "./ActivitiesForm";
 import BadgesForm from "./BadgesForm";
 import ProjectsForm from "./ProjectsForm";
+import ImportExportButtons from "./ImportExportButtons";
 
 const ResumeEditor: React.FC = () => {
   const { setTemplate, template } = useResumeContext();
@@ -28,17 +29,20 @@ const ResumeEditor: React.FC = () => {
     <div className="bg-white p-6 rounded-lg shadow-sm h-full overflow-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Edit Your Resume</h2>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-1 text-sm border rounded-md hover:bg-gray-50">
-            Template: {template} <ChevronDown className="h-4 w-4" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setTemplate("Classic")}>Classic</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTemplate("Modern")}>Modern</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTemplate("Minimal")}>Minimal</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTemplate("Professional")}>Professional</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-3">
+          <ImportExportButtons />
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 px-3 py-1 text-sm border rounded-md hover:bg-gray-50">
+              Template: {template} <ChevronDown className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setTemplate("Classic")}>Classic</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTemplate("Modern")}>Modern</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTemplate("Minimal")}>Minimal</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTemplate("Professional")}>Professional</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <Tabs defaultValue="personal" className="w-full">
