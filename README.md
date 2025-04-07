@@ -1,73 +1,86 @@
-# Welcome to your Lovable project
 
-## Project info
 
-**URL**: https://lovable.dev/projects/a67b91d5-4b49-4574-950e-a5c917b0b5eb
+## CV Builder
 
-## How can I edit this code?
 
-There are several ways of editing your application.
+## Project Information
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a67b91d5-4b49-4574-950e-a5c917b0b5eb) and start prompting.
+## Features
 
-Changes made via Lovable will be committed automatically to this repo.
+### WhatsApp Link Generation
+- Create direct chat links using phone numbers
+- Add pre-filled messages to start conversations
+- Copy shareable links with one click
+- Generate scannable QR codes
 
-**Use your preferred IDE**
+### Telegram Link Generation
+- Create direct chat links using phone numbers or usernames
+- Add pre-filled messages
+- Copy shareable links with one click
+- Generate scannable QR codes
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### User-Friendly Interface
+- Modern, responsive design
+- Intuitive controls for easy use
+- Real-time link generation as you type
+- Visual confirmation for copied links
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## How It Works
 
-Follow these steps:
+### WhatsApp Direct Chat
+1. Enter a phone number with country code
+2. Add an optional message to start the conversation with
+3. Click "Open Chat" to start talking, or copy the link to share
+4. Alternatively, generate a QR code for easy mobile device scanning
 
+### Telegram Direct Chat
+1. Enter a Telegram username (e.g., @username) or phone number with country code
+2. Add an optional message to start the conversation with
+3. Click "Open Chat" to start talking, or copy the link to share
+4. Alternatively, generate a QR code for easy mobile device scanning
+
+## Technologies Used
+- React with TypeScript
+- Tailwind CSS for styling
+- Shadcn UI components
+- React Router for navigation
+- QRCode library for QR code generation
+- Three.js with React Three Fiber for 3D backgrounds
+- Framer Motion for animations
+
+## Development
+
+### Prerequisites
+- Node.js 18+ and npm
+
+### Installation
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone the repository
+git clone <repository-url>
+cd apt-cv-design
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Building for Production
+```sh
+npm run build
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Privacy
+This application does not store any data. All link generation happens locally in your browser, and no phone numbers or messages are saved on any server.
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## License
 
-## What technologies are used for this project?
+[MIT License](LICENSE)
 
-This project is built with:
+## Disclaimer
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This tool is not affiliated with, associated with, or endorsed by WhatsApp Inc. or Telegram Messenger Inc. WhatsApp and Telegram are trademarks of their respective owners.
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a67b91d5-4b49-4574-950e-a5c917b0b5eb) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
